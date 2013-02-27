@@ -14,6 +14,7 @@
 extern "C" {
 // Trampoline from C main file to C++ main class.
 void RunProgramLoop() {
+  //ProgramLoop lp;
   ProgramLoop* loop = new ProgramLoop();
   loop->Init();
   loop->Run();
