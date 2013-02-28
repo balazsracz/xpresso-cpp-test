@@ -23,7 +23,7 @@ void RunProgramLoop() {
     // Enter an infinite loop, just incrementing a counter
     volatile static int i = 0 ;
     while(1) {
-      const int bit = 17;
+      const int bit = 19;
       const int mask = (1<<bit)-1;
       if (!(i & mask)) {
         if ((i >> bit) & 1) {
