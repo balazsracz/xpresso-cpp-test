@@ -65,10 +65,19 @@ void CAN_error(uint32_t error_info){
   return;
 }
 
-uint32_t ClkInitTable[2] = {
+/*  125 kbaud
+
+ uint32_t ClkInitTable[2] = {
   0x00000000UL, // CANCLKDIV
   0x00001C57UL  // CAN_BTR
+}; */
+
+// 250 kbaud
+uint32_t ClkInitTable[2] = {
+  0x00000000UL, // CANCLKDIV
+  0x00001C4BUL  // CAN_BTR
 };
+
 
 // Putting this inside of the #ifdef will ensure that we get a linker error if we do not have the interrupt routine setup.
 void CANHandler::Initialize() {
@@ -100,6 +109,18 @@ void CANHandler::Initialize() {
    (*rom)->pCAND->config_rxmsgobj(&msg_obj);
 }
 
+void CANHandler::SendFrame(uint32_t id, int dlc, int32_t d1, int32_t d2) {
+  CAN_MSG_OBJ msg_obj;
+  msg_obj.msgobj  = 3;
+  msg_obj.mode_id = id;
+  msg_obj.mask    = 0x0;
+  msg_obj.dlc     = dlc;
+  msg_obj.data[0] = 'T';  //0x54
+  msg_obj.data[1] = 'E';  //0x45
+  msg_obj.data[2] = 'S';  //0x53
+  msg_obj.data[3] = 'T';  //0x54
+  (*rom)->pCAND->can_transmit(&msg_obj);
+}
 
 
 #endif

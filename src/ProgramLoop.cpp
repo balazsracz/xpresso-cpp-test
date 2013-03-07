@@ -25,9 +25,11 @@ void RunProgramLoop() {
     // Enter an infinite loop, just incrementing a counter
     volatile static int i = 0 ;
     while(1) {
-      const int bit = 25;
+      const int bit = 20;
       const int mask = (1<<bit)-1;
       if (!(i & mask)) {
+        //LPC_GPIO0->DATA ^= (1<<7);
+        hnd.SendFrame(0x500, 0, 0, 0);
         LPC_GPIO0->DATA ^= (1<<7);
       }
       i++ ;
